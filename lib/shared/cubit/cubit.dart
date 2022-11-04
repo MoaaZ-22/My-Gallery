@@ -41,19 +41,29 @@ class AppCubit extends Cubit<AppStates> {
     );
   }
 
-  Future<void> pickProfileImage() async {
+  Future<void> pickGalleryImage() async {
     final XFile? pickedProfileFile =
     await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedProfileFile != null) {
       galleryImage = io.File(pickedProfileFile.path);
-
+      print('$galleryImage ---------------------------------------- 1');
       emit(GalleryImagePickedSuccessState());
     } else {
       print('No Image Selected');
       emit(GalleryImagePickedErrorState());
     }
   }
+
+  void uploadGalleryImage({String? pickedImages})
+{
+  DioHelper.postData(url: UPLOAD, data:
+{
+    'img' : pickedImages
+})
+    .then((value){})
+    .catchError((error){});
+}
 
 }
 

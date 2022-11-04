@@ -181,7 +181,8 @@ class ReusableHomeButton extends StatelessWidget {
 class ReusableGalleryButton extends StatelessWidget {
   final String? image;
   final String? text;
-  const ReusableGalleryButton({Key? key, this.image, this.text}) : super(key: key);
+  final void Function()? onPressed;
+  const ReusableGalleryButton({Key? key, this.image, this.text, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +191,7 @@ class ReusableGalleryButton extends StatelessWidget {
       width: 55.w,
       child: MaterialButton(
         elevation: 0,
-        onPressed: (){},
+        onPressed: onPressed,
         color: Colors.white,
         splashColor: const Color(0xffEFD8F9),
         shape: RoundedRectangleBorder(

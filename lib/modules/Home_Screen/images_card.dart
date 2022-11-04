@@ -10,7 +10,6 @@ class ImagesCard extends StatelessWidget {
       height: 13.5.h,
       width: 30.w,
       decoration: BoxDecoration(
-          color: Colors.red,
           borderRadius: BorderRadius.circular(20),
           image: const DecorationImage(
               fit: BoxFit.cover,

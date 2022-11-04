@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_gallery/modules/Home_Screen/images_card.dart';
+import 'package:my_gallery/shared/components/const.dart';
 import 'package:my_gallery/shared/cubit/cubit.dart';
 import 'package:my_gallery/shared/cubit/states.dart';
 import 'package:sizer/sizer.dart';
@@ -18,7 +19,15 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is GalleryImagePickedSuccessState)
+          {
+
+          }
+        else
+          {
+          }
+      },
       builder: (context, state)
       {
         return Container(
@@ -84,7 +93,9 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ReusableHomeButton(text: 'Log out', image: 'assets/images/logout.svg',
-                onPressed: (){},
+                onPressed: (){
+                  signOut(context);
+                },
                 ),
                 ReusableHomeButton(text: 'Upload', image: 'assets/images/upload.svg',
                 onPressed: ()
@@ -118,14 +129,19 @@ class HomeScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children:  [
-                                    const ReusableGalleryButton(
+                                    ReusableGalleryButton(
                                       text: 'Gallery',
                                       image: 'assets/images/FromGallery.png',
+                                      onPressed: ()
+                                      {
+                                        AppCubit.get(context).pickGalleryImage();
+                                      },
                                     ),
                                     SizedBox(height: 6.h,),
-                                    const ReusableGalleryButton(
+                                    ReusableGalleryButton(
                                       text: 'Camera',
                                       image: 'assets/images/FromCamera.png',
+                                      onPressed: (){},
                                     ),
                                   ],
                                 ),
