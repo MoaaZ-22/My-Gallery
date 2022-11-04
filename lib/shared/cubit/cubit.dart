@@ -16,7 +16,6 @@ class AppCubit extends Cubit<AppStates> {
 
   ImagesModel? imagesModel;
 
-  io.File? galleryImage;
   io.File? coverImage;
   var picker = ImagePicker();
   
@@ -35,7 +34,7 @@ class AppCubit extends Cubit<AppStates> {
     )
     .catchError((error)
     {
-      print('${error.toString()} ----------------------------------------------------------- 1');
+      print('${error.toString()} ------------------------------------ 1');
       emit(GetGalleryImagesErrorState(error.toString()));
     }
     );
@@ -47,7 +46,7 @@ class AppCubit extends Cubit<AppStates> {
 
     if (pickedProfileFile != null) {
       galleryImage = io.File(pickedProfileFile.path);
-      print('$galleryImage ---------------------------------------- 1');
+      print('$galleryImage ---------------------------------------- 2');
       emit(GalleryImagePickedSuccessState());
     } else {
       print('No Image Selected');
@@ -55,14 +54,19 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 
-  void uploadGalleryImage({String? pickedImages})
-{
-  DioHelper.postData(url: UPLOAD, data:
-{
+  void uploadGalleryImage({io.File? pickedImages})
+  {
+    DioHelper.postData(url: UPLOAD, data:
+  {
     'img' : pickedImages
-})
-    .then((value){})
-    .catchError((error){});
+  })
+    .then((value){
+      emit(UploadGalleryImageSuccessState());
+  })
+    .catchError((error){
+      print(error.toString());
+      emit(UploadGalleryImageErrorState());
+  });
 }
 
 }

@@ -22,10 +22,13 @@ class HomeScreen extends StatelessWidget {
       listener: (context, state) {
         if(state is GalleryImagePickedSuccessState)
           {
-
+              AppCubit.get(context).uploadGalleryImage(pickedImages: galleryImage);
+              Navigator.pop(context);
+              galleryImage!.delete();
           }
-        else
+        else if (state is GalleryImagePickedErrorState)
           {
+            snackBar(text: 'No image selected, Pls try Again', backgroundColor: Colors.red, seconds: 2, context: context, barBehavior: SnackBarBehavior.floating);
           }
       },
       builder: (context, state)

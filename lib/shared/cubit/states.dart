@@ -28,6 +28,10 @@ class GalleryImagePickedSuccessState extends AppStates{}
 
 class GalleryImagePickedErrorState extends AppStates{}
 
+class UploadGalleryImageSuccessState extends AppStates{}
+
+class UploadGalleryImageErrorState extends AppStates{}
+
 
 
 
