@@ -12,7 +12,7 @@ https://user-images.githubusercontent.com/71730030/199932828-dccbe27c-d2cd-43ba-
 ![LoginScreen](https://user-images.githubusercontent.com/71730030/199931688-b849b852-61d3-41db-8e02-c94a3bb659df.jpeg)
 
 
-![GalleryScreen2](https://user-images.githubusercontent.com/71730030/199931780-57fa256d-b67f-416c-8008-0d498f1504d5.jpeg)
+![GalleryScreen](https://user-images.githubusercontent.com/71730030/199974634-9f7a7dda-47d7-4331-a81c-a2857d8d08b3.jpeg)
 
 
-![GalleryScreen](https://user-images.githubusercontent.com/71730030/199931726-a9368048-10da-4ac0-ad71-8bb9e32a53b2.jpeg)
+![NoImageSelected](https://user-images.githubusercontent.com/71730030/199974678-feef86d9-774b-4520-9fe8-a579c9b1e03a.jpeg)
