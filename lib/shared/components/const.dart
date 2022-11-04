@@ -6,7 +6,7 @@ import '../network/local/cache_helper.dart';
 
 String? token = '';
 
-File? galleryImage;
+File? pickedImage;
 
 void pushReplacementNavigate(context, dynamic widget) =>
     Navigator.pushReplacement(

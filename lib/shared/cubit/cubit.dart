@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print, use_full_hex_values_for_flutter_colors
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_gallery/models/images_model.dart';
@@ -16,19 +17,19 @@ class AppCubit extends Cubit<AppStates> {
 
   ImagesModel? imagesModel;
 
-  io.File? coverImage;
   var picker = ImagePicker();
   
   void getGalleryImages()
   {
     emit(GetGalleryImagesLoadingState());
     
-    DioHelper.getData(url: GET_GALLERY_IMAGES, accessToken: token)
+    DioHelper.getData(url: 'my-gallery', accessToken: token)
     .then((value)
     {
+      print(token);
       imagesModel = ImagesModel.fromJson(value.data);
       print(imagesModel!.message!);
-      print(imagesModel!.data!.images!);
+      print(imagesModel!.data!.images![0]);
       emit(GetGalleryImagesSuccessState(imagesModel));
     }
     )
@@ -45,8 +46,9 @@ class AppCubit extends Cubit<AppStates> {
     await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedProfileFile != null) {
-      galleryImage = io.File(pickedProfileFile.path);
-      print('$galleryImage ---------------------------------------- 2');
+      pickedImage = io.File(pickedProfileFile.path);
+      uploadImage(pickedFile: pickedImage);
+      print('$pickedImage ---------------------------------------- 2');
       emit(GalleryImagePickedSuccessState());
     } else {
       print('No Image Selected');
@@ -54,20 +56,39 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 
-  void uploadGalleryImage({io.File? pickedImages})
-  {
-    DioHelper.postData(url: UPLOAD, data:
-  {
-    'img' : pickedImages
-  })
-    .then((value){
+  Future<void> pickCameraImage() async {
+    final XFile? pickedProfileFile =
+    await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedProfileFile != null) {
+      pickedImage = io.File(pickedProfileFile.path);
+      uploadImage(pickedFile: pickedImage);
+      print('$pickedImage ---------------------------------------- 2');
+      emit(CameraImagePickedSuccessState());
+    } else {
+      print('No Image Selected');
+      emit(CameraImagePickedErrorState());
+    }
+  }
+
+
+  void uploadImage({io.File? pickedFile}) {
+    print("object");
+    DioHelper.postImage(
+        url: UPLOAD,
+        token: token,
+        data: FormData.fromMap(
+            {"img": MultipartFile.fromFileSync(pickedFile!.path)}))
+        .then((value) {
       emit(UploadGalleryImageSuccessState());
-  })
-    .catchError((error){
-      print(error.toString());
+      getGalleryImages();
+    }).catchError((error) {
+      if (error is DioError) {
+        print(error.response);
+      }
       emit(UploadGalleryImageErrorState());
-  });
-}
+    });
+  }
 
 }
 

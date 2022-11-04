@@ -50,6 +50,27 @@ class DioHelper {
     );
   }
 
+  static Future<Response> postImage({
+    required String url,
+    required  data,
+    String? token
+  }) async
+  {
+    dio.options.headers =
+    {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    return await dio.post(
+      url,
+      data: data,
+    ).catchError((error) {
+      print('error in Post Data Dio ${error.toString()}');
+    });
+  }
+
   static Future<Response> postWithoutData(
       {required String url,
         Map<String, dynamic>? query,String lang = 'en', String? accessToken,
